@@ -14,9 +14,17 @@ router.get('/',async (req, res) => {
 })
 
 // pega somente o resgistro co id
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
+    try{
+        const id = req.params.id
+        const filmes = await Filmes.findById()
+        res.json({error: false, filmes})
+    }catch(err) {
+        res.json({ error: true, message: err.message})
+    }
 const id = req.params.id
-    res.json({mensagem: `pega somente registro com id: ${id}`})
+
+    
 })
 
 // criar um registro

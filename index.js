@@ -1,6 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
+const bodyParser = require('body-parser')
+
 const app = express()
 
 mongoose.connect('mongodb+srv://claudio:claudio@cluster0.ivc1j.gcp.mongodb.net/netflix?retryWrites=true&w=majority',{
@@ -10,7 +12,7 @@ mongoose.connect('mongodb+srv://claudio:claudio@cluster0.ivc1j.gcp.mongodb.net/n
 
 const routes = require('./src/routes/filmes.routes')
 
-
+app.use(bodyParser.json())
 app.use(morgan('dev'))
 app.use('/', routes)
 
