@@ -17,12 +17,12 @@ router.get('/',async (req, res) => {
 router.get('/:id', async (req, res) => {
     try{
         const id = req.params.id
-        const filmes = await Filmes.findById()
+        const filmes = await Filmes.findById(id)
         res.json({error: false, filmes})
     }catch(err) {
         res.json({ error: true, message: err.message})
     }
-const id = req.params.id
+
 
     
 })
@@ -40,13 +40,25 @@ router.post('/', async (req, res) => {
 })
 
 //atualicar resgistro
-router.put('/:id',(req, res) => {
-    const Filmes = req.params.id
-    res.json({mensagem: `Atualizar registro com id: ${id}`})
+router.put('/:id', async (req, res) => {
+    try{
+        const id = req.params.id
+        const novo_filmes = req.body
+
+        const filmesAtualizados = await Filmes.findByIdAndUpdate(id, novo_filmes)
+        res.json({error: false, filmesAtualizados})
+    }catch(err){res.json({error: true, message: err.message })}
+    
+    
 })
 //deleta registro
-router.delete('/:id',(req, res) => {
-    res.json({messagem: "deleta registro com id: ${id}"})
+router.delete('/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+        await Filmes.findByIdAndDelete(id)
+        res.json({error: false})
+    }catch (err) {res.json({error: true, message: err.message})}
+    
 })
 
 
